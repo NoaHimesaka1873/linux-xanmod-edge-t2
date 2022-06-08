@@ -143,7 +143,7 @@ done
 
 sha256sums=('51f3f1684a896e797182a0907299cc1f0ff5e5b51dd9a55478ae63a409855cee'
             'SKIP'
-            '049c902ae35b9f2890027fda29d3e3632aba64a68f46dc4b26f2d15469de5ebe'
+            'SKIP'
             'dda2e928f3b02c28e71d4e99f90b499b4c99a265d30fceec7dc1dd7082afc285'
             'SKIP'
             'SKIP'
