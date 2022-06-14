@@ -123,9 +123,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
   # Broadcom WIFI device support
   # https://github.com/AsahiLinux/linux/commits/bits/080-wifi
   8001-asahilinux-wifi-patchset.patch
-
-  # do not make the t2 angry with some kernel configs
-  9001-efi-Do-not-import-certificates-from-UEFI-Secure-Boot.patch
 )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 validpgpkeys=(
@@ -160,8 +157,7 @@ sha256sums=('51f3f1684a896e797182a0907299cc1f0ff5e5b51dd9a55478ae63a409855cee'
             'b1f19084e9a9843dd8c457c55a8ea8319428428657d5363d35df64fb865a4eae'
             '92e6f4173074ac902c3fc397ea39a5ff6d5eb8645539645c0cd61b3d05ac83ca'
             '9ede98eceb69e9c93e25fdb2c567466963bdd2f81c0ecb9fb9e5107f6142ff26'
-            '7f4c83883e74d08c5282c350470661f1d30743479650974d7554625e01fe237e'
-            '9c66c30e5312922918d92411d4698291071a9f7b6be6a54f19fc74a31e3cfca4')
+            '7f4c83883e74d08c5282c350470661f1d30743479650974d7554625e01fe237e')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
