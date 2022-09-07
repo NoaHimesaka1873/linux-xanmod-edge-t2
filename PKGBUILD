@@ -118,7 +118,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
   4001-Input-bcm5974-Add-support-for-the-T2-Macs.patch
 
   # make hid not touch tb to avoid `vhci: [00] URB failed: 3`
-  5001-Fix-for-touchbar.patch
+#  5001-Fix-for-touchbar.patch
 
   # Hack for i915 overscan issues
   7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
@@ -163,7 +163,7 @@ sha256sums=('SKIP'
             '398dec7d54c6122ae2263cd5a6d52353800a1a60fd85e52427c372ea9974a625'
             'd4ca5a01da5468a1d2957b8eb4a819e1b867a3bcd1cd47389d7c9ac9154b5430'
             'b1f19084e9a9843dd8c457c55a8ea8319428428657d5363d35df64fb865a4eae'
-            '92e6f4173074ac902c3fc397ea39a5ff6d5eb8645539645c0cd61b3d05ac83ca'
+#            '92e6f4173074ac902c3fc397ea39a5ff6d5eb8645539645c0cd61b3d05ac83ca'
             '9ede98eceb69e9c93e25fdb2c567466963bdd2f81c0ecb9fb9e5107f6142ff26'
             '8662089b720681f25068ab479da00790d4e7b168131ea6867ee8db55279c18e6'
             '20d6086c639b170c941f272a4958ad3c7fbf506d919024883f5e3e6199dcde56')
