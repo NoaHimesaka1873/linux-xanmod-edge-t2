@@ -71,7 +71,7 @@ fi
 
 pkgbase=linux-xanmod-edge-t2
 _major=5.19
-pkgver=${_major}.7
+pkgver=${_major}.8
 _branch=5.x
 xanmod=1
 pkgrel=${xanmod}
