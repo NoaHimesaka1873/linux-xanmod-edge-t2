@@ -87,7 +87,7 @@ if [ "${_compiler}" = "clang" ]; then
   makedepends+=(clang llvm lld python)
 fi
 options=('!strip')
-_srcname="linux-${}-xanmod${xanmod}"
+_srcname="linux-${pkgver}-xanmod${xanmod}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
