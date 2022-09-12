@@ -74,7 +74,7 @@ _major=5.19
 pkgver=${_major}.8
 _branch=5.x
 xanmod=1
-pkgrel=${xanmod}
+pkgrel=2
 pkgdesc='Linux Xanmod - Latest Mainline (EDGE) for T2 Macs'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -87,7 +87,7 @@ if [ "${_compiler}" = "clang" ]; then
   makedepends+=(clang llvm lld python)
 fi
 options=('!strip')
-_srcname="linux-${pkgver}-xanmod${xanmod}"
+_srcname="linux-${}-xanmod${xanmod}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
