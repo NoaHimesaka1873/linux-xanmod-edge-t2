@@ -234,7 +234,10 @@ prepare() {
   if [ "$_compress_modules" = "y" ]; then
     scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
   fi
-
+  
+  # Enable Bluetooth for BCM4377
+  scripts/config --module BT_HCIBCM4377
+  
   # Let's user choose microarchitecture optimization in GCC
   # Use default microarchitecture only if we have not choosen another microarchitecture
   if [ "$_microarchitecture" -ne "0" ]; then
