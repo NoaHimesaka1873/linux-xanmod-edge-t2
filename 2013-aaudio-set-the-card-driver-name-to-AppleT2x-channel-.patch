@@ -1,0 +1,94 @@
+From 170e7ad37166319f1a13b37e52f83a43608826b5 Mon Sep 17 00:00:00 2001
+From: kekrby <kekrby@gmail.com>
+Date: Sat, 10 Sep 2022 21:56:47 +0300
+Subject: [PATCH] aaudio: set the card driver name to AppleT2x{channel count}
+ instead of AppleT2 so that audio configuration files of Macs with different
+ channel counts can coexist together
+
+
+redecorating: changed filepaths to patch when in drivers/staging
+---
+ drivers/staging/apple-bce/audio/audio.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/audio/audio.c b/audio/audio.c
+index 14aa3a0..fc19519 100644
+--- a/drivers/staging/apple-bce/audio/audio.c
++++ b/drivers/staging/apple-bce/audio/audio.c
+@@ -90,7 +90,7 @@ static int aaudio_probe(struct pci_dev *dev, const struct pci_device_id *id)
+         dev_err(&dev->dev, "aaudio: Failed to create ALSA card\n");
+         goto fail;
+     }
+-    strcpy(aaudio->card->driver, "AppleT2");
++
+     strcpy(aaudio->card->shortname, "Apple T2 Audio");
+     strcpy(aaudio->card->longname, "Apple T2 Audio");
+     strcpy(aaudio->card->mixername, "Apple T2 Audio");
+@@ -101,10 +101,12 @@ static int aaudio_probe(struct pci_dev *dev, const struct pci_device_id *id)
+         dev_err(&dev->dev, "aaudio: Failed to initialize over BCE\n");
+         goto fail_snd;
+     }
++
+     if (aaudio_init_bs(aaudio)) {
+         dev_err(&dev->dev, "aaudio: Failed to initialize BufferStruct\n");
+         goto fail_snd;
+     }
++
+     if ((status = aaudio_cmd_set_remote_access(aaudio, AAUDIO_REMOTE_ACCESS_ON))) {
+         dev_err(&dev->dev, "Failed to set remote access\n");
+         return status;
+@@ -115,6 +117,19 @@ static int aaudio_probe(struct pci_dev *dev, const struct pci_device_id *id)
+         goto fail_snd;
+     }
+ 
++    struct aaudio_subdevice *sdev;
++    list_for_each_entry(sdev, &aaudio->subdevice_list, list) {
++        struct aaudio_buffer_struct_device *dev = &aaudio->bs->devices[sdev->buf_id];
++
++        if (sdev->out_stream_cnt == 1 && !strcmp(dev->name, "Speaker")) {
++            char name[10];
++            struct snd_pcm_hardware *hw = sdev->out_streams[0].alsa_hw_desc;
++
++            snprintf(name, sizeof(name) / sizeof(char), "AppleT2x%d", hw->channels_min);
++            strcpy(aaudio->card->driver, name);
++        }
++    }
++
+     return 0;
+ 
+ fail_snd:
+@@ -690,4 +705,4 @@ struct aaudio_alsa_pcm_id_mapping aaudio_alsa_id_mappings[] = {
+ module_param_named(index, aaudio_alsa_index, int, 0444);
+ MODULE_PARM_DESC(index, "Index value for Apple Internal Audio soundcard.");
+ module_param_named(id, aaudio_alsa_id, charp, 0444);
+-MODULE_PARM_DESC(id, "ID string for Apple Internal Audio soundcard.");
+\ No newline at end of file
++MODULE_PARM_DESC(id, "ID string for Apple Internal Audio soundcard.");
+--
+From b19fa304cb0a900c9168d51b5e43bb629023a396 Mon Sep 17 00:00:00 2001
+From: kekrby <kekrby@gmail.com>
+Date: Mon, 12 Sep 2022 18:26:42 +0300
+Subject: [PATCH] aaudio: remove redundant strcpy
+
+redecorating: changed filepaths to patch when in drivers/staging
+---
+ drivers/staging/apple-bce/audio/audio.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/audio/audio.c b/audio/audio.c
+index fc19519..16c80af 100644
+--- a/drivers/staging/apple-bce/audio/audio.c
++++ b/drivers/staging/apple-bce/audio/audio.c
+@@ -122,11 +122,9 @@ static int aaudio_probe(struct pci_dev *dev, const struct pci_device_id *id)
+         struct aaudio_buffer_struct_device *dev = &aaudio->bs->devices[sdev->buf_id];
+ 
+         if (sdev->out_stream_cnt == 1 && !strcmp(dev->name, "Speaker")) {
+-            char name[10];
+             struct snd_pcm_hardware *hw = sdev->out_streams[0].alsa_hw_desc;
+ 
+-            snprintf(name, sizeof(name) / sizeof(char), "AppleT2x%d", hw->channels_min);
+-            strcpy(aaudio->card->driver, name);
++            snprintf(aaudio->card->driver, sizeof(aaudio->card->driver) / sizeof(char), "AppleT2x%d", hw->channels_min);
+         }
+     }
+ 
