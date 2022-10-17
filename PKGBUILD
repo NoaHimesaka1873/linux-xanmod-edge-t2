@@ -103,9 +103,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
   # Fix some acpi errors
   2001-fix-acpica-for-zero-arguments-acpi-calls.patch
 
-  # Efi fixes
-  2002-efi-Correct-Macmini-capitalisation-in-uefi-cert-quir.patch
-
   # Misc BCE patches
   2011-change-many-info-logs-to-debug.patch
   2013-aaudio-set-the-card-driver-name-to-AppleT2x-channel-.patch
