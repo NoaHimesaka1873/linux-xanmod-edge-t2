@@ -1,4 +1,5 @@
-# Maintainer: Joan Figueras <ffigue at gmail dot com>
+# Maintainer: Noa Himesaka <himesaka@noa.codes>
+# Original Maintainer: Joan Figueras <ffigue at gmail dot com>
 # Contributor: Torge Matthies <openglfreak at googlemail dot com>
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
@@ -70,9 +71,9 @@ fi
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-edge-t2
-_major=5.19
-pkgver=${_major}.10
-_branch=5.x
+_major=6.0
+pkgver=${_major}.2
+_branch=6.x
 xanmod=1
 pkgrel=2
 pkgdesc='Linux Xanmod - Latest Mainline (EDGE) for T2 Macs'
@@ -92,8 +93,10 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        # apple-bce, apple-ibridge
-  apple-bce::git+https://github.com/t2linux/apple-bce-drv#commit=f93c6566f98b3c95677de8010f7445fa19f75091
+  0001-arch-additions.patch
+
+  # apple-bce, apple-ibridge
+  apple-bce::git+https://github.com/t2linux/apple-bce-drv#commit=6988ec2f08ed7092211540ae977f4ddb56d4fd49
   apple-ibridge::git+https://github.com/Redecorating/apple-ib-drv#commit=467df9b11cb55456f0365f40dd11c9e666623bf3
 
   1001-Put-apple-bce-and-apple-ibridge-in-drivers-staging.patch
@@ -104,6 +107,10 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
 
   # Efi fixes
   2002-efi-Correct-Macmini-capitalisation-in-uefi-cert-quir.patch
+
+  # Misc BCE patches
+  2011-change-many-info-logs-to-debug.patch
+  2013-aaudio-set-the-card-driver-name-to-AppleT2x-channel-.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -117,8 +124,9 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
   # T2 USB Touchpad support
   4001-Input-bcm5974-Add-support-for-the-T2-Macs.patch
 
-  # make hid not touch tb to avoid `vhci: [00] URB failed: 3`
-#  5001-Fix-for-touchbar.patch
+  # Keyboard Layout fixes
+  5001-HID-apple-fix-key-translations-where-multiple-quirks.patch
+  5002-HID-apple-enable-APPLE_ISO_TILDE_QUIRK-for-the-keybo.patch
 
   # Hack for i915 overscan issues
   7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
@@ -130,6 +138,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
   # Broadcom BCM4377 BT device support
   # https://github.com/AsahiLinux/linux/commits/bluetooth-wip
   8002-asahilinux-hci_bcm4377-patchset.patch
+
 )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 validpgpkeys=(
@@ -145,16 +154,19 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('SKIP'
+sha256sums=('5c2443a5538de52688efb55c27ab0539c1f5eb58c0cfd16a2b9fbb08fd81788e'
             'SKIP'
-            'SKIP'
-            'SKIP'
+            'feb15accc0576f78eca9cbf8f8178419c4a2aeb3915a9bfefacf2467bcc55b35'
+            'dda2e928f3b02c28e71d4e99f90b499b4c99a265d30fceec7dc1dd7082afc285'
+            '4f234a9a785f5685de298e042badf6e36e7d9aeafa962b340af8c859ca84a221'
             'SKIP'
             'SKIP'
             '4482f285a66a31561452c81f232ec9c4396dc95c40a37645c7c47d7bc8b26184'
             'a3a43feaffccbcd119f4a1b4e1299ef07ae36ef9bffc17767bf10e447fa02a2a'
             '45b911e592dd6c717e77ec4d8cbf844860bb7c29ace7a7170e7bf59c12e91bb4'
             'c0807635ea60e5d8adf344ca50e39ab91322e984dda797a17efdc8ba19cc5dd5'
+            '32d3915b4d50cfc654dda53e65e633d1e99b6c98795cbb7416f1ae8fe1ea2321'
+            '515756555e7a6178f38c82bb1dbc2919aa9660ee8b9e158f3764948578dee92c'
             'cfd23a06797ac86575044428a393dd7f10f06eff7648d0b78aedad82cbe41279'
             '8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3'
             '08d165106fe35b68a7b48f216566951a5db0baac19098c015bcc81c5fcba678d'
@@ -163,10 +175,11 @@ sha256sums=('SKIP'
             '398dec7d54c6122ae2263cd5a6d52353800a1a60fd85e52427c372ea9974a625'
             'd4ca5a01da5468a1d2957b8eb4a819e1b867a3bcd1cd47389d7c9ac9154b5430'
             'b1f19084e9a9843dd8c457c55a8ea8319428428657d5363d35df64fb865a4eae'
-#            '92e6f4173074ac902c3fc397ea39a5ff6d5eb8645539645c0cd61b3d05ac83ca'
+            '7d27bd83133c2e883e854271c5f9f698c61196afc2922921675353303194ef2c'
+            '4db195e0bda5712e60a78266c1458037063e5debd646b08376c4700a27d4b4ef'
             '9ede98eceb69e9c93e25fdb2c567466963bdd2f81c0ecb9fb9e5107f6142ff26'
-            '8662089b720681f25068ab479da00790d4e7b168131ea6867ee8db55279c18e6'
-            '20d6086c639b170c941f272a4958ad3c7fbf506d919024883f5e3e6199dcde56')
+            'e27a4acdb9027a0652d558d619b5be3dc916d2472f3b4d01d10932fc6f35f8dc'
+            'fc22ff1285552a85148ec5c21a9e5d93f2420a806ebdc53894636ec5f17505a8')
 
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
