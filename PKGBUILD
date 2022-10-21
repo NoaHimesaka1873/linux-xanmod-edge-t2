@@ -75,7 +75,7 @@ _major=6.0
 pkgver=${_major}.2
 _branch=6.x
 xanmod=1
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux Xanmod - Latest Mainline (EDGE) for T2 Macs'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -102,6 +102,7 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
 
   # Fix some acpi errors
   2001-fix-acpica-for-zero-arguments-acpi-calls.patch
+  2003-fix-nvram-write.patch
 
   # Misc BCE patches
   2011-change-many-info-logs-to-debug.patch
@@ -173,10 +174,6 @@ sha256sums=('5c2443a5538de52688efb55c27ab0539c1f5eb58c0cfd16a2b9fbb08fd81788e'
             '9ede98eceb69e9c93e25fdb2c567466963bdd2f81c0ecb9fb9e5107f6142ff26'
             'e27a4acdb9027a0652d558d619b5be3dc916d2472f3b4d01d10932fc6f35f8dc'
             'fc22ff1285552a85148ec5c21a9e5d93f2420a806ebdc53894636ec5f17505a8')
-
-export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-archlinux}
-export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-makepkg}
-export KBUILD_BUILD_TIMESTAMP=${KBUILD_BUILD_TIMESTAMP:-$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})}
 
 prepare() {
   cd linux-${_major}

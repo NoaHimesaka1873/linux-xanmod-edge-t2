@@ -135,7 +135,7 @@ sleep 5
 
 _defaultmicro=$(grep ^CONFIG_LOCALVERSION .config)
 if [ -z "${default}" ]; then
-    _localversion=$(echo ${Microarchitecture,,} | sed -e 's/config_m/-/g' -e 's/config_generic_cpu/-x64v/g')
+    _localversion=Wataten-T2
     sed -e "s|^$_defaultmicro|CONFIG_LOCALVERSION=\"$_localversion\"|g" -i .config
 fi
 
