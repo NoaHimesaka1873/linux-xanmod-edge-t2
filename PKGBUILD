@@ -303,6 +303,7 @@ _package() {
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
   provides=(VIRTUALBOX-GUEST-MODULES
+            linux-t2
             WIREGUARD-MODULE
             KSMBD-MODULE
             NTFS3-MODULE)
@@ -328,6 +329,7 @@ _package() {
 
 _package-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel"
+  provides=(linux-t2-headers)
   depends=(pahole)
 
   cd linux-${_major}
