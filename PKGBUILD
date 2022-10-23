@@ -72,10 +72,10 @@ fi
 
 pkgbase=linux-xanmod-edge-t2
 _major=6.0
-pkgver=${_major}.2
+pkgver=${_major}.3
 _branch=6.x
 xanmod=1
-pkgrel=4
+pkgrel=1
 pkgdesc='Linux Xanmod - Latest Mainline (EDGE) for T2 Macs'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -185,7 +185,6 @@ prepare() {
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
-  echo "${pkgbase#linux-xanmod-edge}" > localversion.20-pkgname
 
   for i in apple-bce apple-ibridge; do
     echo "Copying $i in to drivers/staging..."
