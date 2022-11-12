@@ -102,7 +102,6 @@ source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar
 
   # Fix some acpi errors
   2001-fix-acpica-for-zero-arguments-acpi-calls.patch
-  2003-fix-nvram-write.patch
 
   # Misc BCE patches
   2011-change-many-info-logs-to-debug.patch
@@ -159,7 +158,6 @@ sha256sums=('5c2443a5538de52688efb55c27ab0539c1f5eb58c0cfd16a2b9fbb08fd81788e'
             '4482f285a66a31561452c81f232ec9c4396dc95c40a37645c7c47d7bc8b26184'
             'a3a43feaffccbcd119f4a1b4e1299ef07ae36ef9bffc17767bf10e447fa02a2a'
             '45b911e592dd6c717e77ec4d8cbf844860bb7c29ace7a7170e7bf59c12e91bb4'
-            '64ad589f5aff721249d49b4175cd0698c574f57b1296cc288815f2262b4493ec'
             '32d3915b4d50cfc654dda53e65e633d1e99b6c98795cbb7416f1ae8fe1ea2321'
             '515756555e7a6178f38c82bb1dbc2919aa9660ee8b9e158f3764948578dee92c'
             'cfd23a06797ac86575044428a393dd7f10f06eff7648d0b78aedad82cbe41279'
