@@ -9,7 +9,7 @@ jobs:
     - name: Build In Docker
       if: ${{ !contains(github.event.head_commit.message, '[no build]') }}
       run: |
-        BUILDUSER=koyoritanemura
+        BUILDUSER=miyakohoshino
         BUILDGROUP=wataten
         HOSTNAME=watashi-ni-tenshi-ga-maiorita
         cat << EOF > entrypoint.sh
@@ -57,7 +57,7 @@ jobs:
          draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
          prerelease: ${{ contains(github.event.head_commit.message, '[prerel]') }}
          body: |
-          This release features Koyori Tanemura from [Watashi ni Tenshi ga Maiorita!](https://myanimelist.net/anime/37993/Watashi_ni_Tenshi_ga_Maiorita), celebrating movie release in Japan! 
+          This release features Miyako Hoshino from [Watashi ni Tenshi ga Maiorita!](https://myanimelist.net/anime/37993/Watashi_ni_Tenshi_ga_Maiorita), celebrating movie release in Japan! 
           Every major release will feature new anime/manga and minor releases will have different characters!
           Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
       env:
