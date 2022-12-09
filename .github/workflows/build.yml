@@ -9,7 +9,7 @@ jobs:
     - name: Build In Docker
       if: ${{ !contains(github.event.head_commit.message, '[no build]') }}
       run: |
-        BUILDUSER=hanashirosaki
+        BUILDUSER=kanonkonomori
         BUILDGROUP=wataten
         HOSTNAME=watashi-ni-tenshi-ga-maiorita
         cat << EOF > entrypoint.sh
