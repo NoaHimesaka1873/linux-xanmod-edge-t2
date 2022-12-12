@@ -71,8 +71,8 @@ fi
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-edge-t2
-_major=6.0
-pkgver=${_major}.12
+_major=6.1
+pkgver=${_major}.0
 _branch=6.x
 xanmod=1
 pkgrel=1
@@ -93,47 +93,7 @@ _srcname="linux-${pkgver}-xanmod${xanmod}"
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
         "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-  # apple-bce, apple-ibridge
-  apple-bce::git+https://github.com/t2linux/apple-bce-drv#commit=6988ec2f08ed7092211540ae977f4ddb56d4fd49
-  apple-ibridge::git+https://github.com/Redecorating/apple-ib-drv#commit=467df9b11cb55456f0365f40dd11c9e666623bf3
-
-  1001-Put-apple-bce-and-apple-ibridge-in-drivers-staging.patch
-  1002-add-modalias-to-apple-bce.patch
-
-  # Fix some acpi errors
-  2001-fix-acpica-for-zero-arguments-acpi-calls.patch
-
-  # Misc BCE patches
-  2011-change-many-info-logs-to-debug.patch
-  2013-aaudio-set-the-card-driver-name-to-AppleT2x-channel-.patch
-
-  # Apple SMC ACPI support
-  3001-applesmc-convert-static-structures-to-drvdata.patch
-  3002-applesmc-make-io-port-base-addr-dynamic.patch
-  3003-applesmc-switch-to-acpi_device-from-platform.patch
-  3004-applesmc-key-interface-wrappers.patch
-  3005-applesmc-basic-mmio-interface-implementation.patch
-  3006-applesmc-fan-support-on-T2-Macs.patch
-  3007-applesmc-Add-iMacPro-to-applesmc_whitelist.patch
-
-  # T2 USB Touchpad support
-  4001-Input-bcm5974-Add-support-for-the-T2-Macs.patch
-
-  # Keyboard Layout fixes
-  5001-HID-apple-fix-key-translations-where-multiple-quirks.patch
-  5002-HID-apple-enable-APPLE_ISO_TILDE_QUIRK-for-the-keybo.patch
-
-  # Hack for i915 overscan issues
-  7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
-
-  # Broadcom WIFI device support
-  # https://github.com/AsahiLinux/linux/commits/bits/080-wifi
-  8001-asahilinux-wifi-patchset.patch
-
-  # Broadcom BCM4377 BT device support
-  # https://github.com/AsahiLinux/linux/commits/bluetooth-wip
-  8002-asahilinux-hci_bcm4377-patchset.patch
-
+        patches::git+https://github.com/t2linux/linux-t2-patches
 )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 validpgpkeys=(
@@ -184,20 +144,14 @@ prepare() {
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
 
-  for i in apple-bce apple-ibridge; do
-    echo "Copying $i in to drivers/staging..."
-	# no need to copy .git/
-	mkdir drivers/staging/$i
-    cp -r $srcdir/$i/* drivers/staging/$i/
-  done
-
-  # Archlinux patches
+  t2linux_patches=$(ls $srcdir/patches | grep -e \.patch$)
+  mv $srcdir/patches/*.patch $srcdir/
   local src
-  for src in "${source[@]}"; do
+  for src in "${source[@]}" $t2linux_patches; do
     src="${src%%::*}"
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
-    msg2 "Applying patch $src..."
+    echo "Applying patch $src..."
     patch -Np1 < "../$src"
   done
 
@@ -236,8 +190,6 @@ prepare() {
     scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
   fi
   
-  # Enable Bluetooth for BCM4377
-  scripts/config --module BT_HCIBCM4377
   
   # Let's user choose microarchitecture optimization in GCC
   # Use default microarchitecture only if we have not choosen another microarchitecture
@@ -277,7 +229,11 @@ prepare() {
     fi
   fi
 
+  echo "Setting config..."
+  cp ../config .config
+  cat $srcdir/patches/extra_config >> .config
   make LLVM=$_LLVM LLVM_IAS=$_LLVM olddefconfig
+  diff -u ../config .config || :
 
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
