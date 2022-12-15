@@ -109,30 +109,11 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('5c2443a5538de52688efb55c27ab0539c1f5eb58c0cfd16a2b9fbb08fd81788e'
+sha256sums=('2ca1f17051a430f6fed1196e4952717507171acfd97d96577212502703b25deb'
             'SKIP'
-            'f3c82c80998afe76ab6616f9dcaff79da8d37c8b81ecc4af5b4f2f4af33d9516'
-            'cce93915896d9136b544216f8566b80a4f4a10111e654ae12f0fc9fe4d42343a'
-            'SKIP'
-            'SKIP'
-            '4482f285a66a31561452c81f232ec9c4396dc95c40a37645c7c47d7bc8b26184'
-            'a3a43feaffccbcd119f4a1b4e1299ef07ae36ef9bffc17767bf10e447fa02a2a'
-            '45b911e592dd6c717e77ec4d8cbf844860bb7c29ace7a7170e7bf59c12e91bb4'
-            '32d3915b4d50cfc654dda53e65e633d1e99b6c98795cbb7416f1ae8fe1ea2321'
-            '515756555e7a6178f38c82bb1dbc2919aa9660ee8b9e158f3764948578dee92c'
-            'cfd23a06797ac86575044428a393dd7f10f06eff7648d0b78aedad82cbe41279'
-            '8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3'
-            '08d165106fe35b68a7b48f216566951a5db0baac19098c015bcc81c5fcba678d'
-            '62f6d63815d4843ca893ca76b84a9d32590a50358ca0962017ccd75a40884ba8'
-            '2827dab6eeb2d2a08034938024f902846b5813e967a0ea253dc1ea88315da383'
-            '398dec7d54c6122ae2263cd5a6d52353800a1a60fd85e52427c372ea9974a625'
-            'd4ca5a01da5468a1d2957b8eb4a819e1b867a3bcd1cd47389d7c9ac9154b5430'
-            'b1f19084e9a9843dd8c457c55a8ea8319428428657d5363d35df64fb865a4eae'
-            '7d27bd83133c2e883e854271c5f9f698c61196afc2922921675353303194ef2c'
-            '4db195e0bda5712e60a78266c1458037063e5debd646b08376c4700a27d4b4ef'
-            '9ede98eceb69e9c93e25fdb2c567466963bdd2f81c0ecb9fb9e5107f6142ff26'
-            'e27a4acdb9027a0652d558d619b5be3dc916d2472f3b4d01d10932fc6f35f8dc'
-            'fc22ff1285552a85148ec5c21a9e5d93f2420a806ebdc53894636ec5f17505a8')
+            'b044b25b37117f3de7878e6f9e94bd6e215ff8ec949ced8898000d9b52d1d55a'
+            'a4968ae2089dcf17e0b308eef2c5b5b0520c574262b6255daa583983f53ca1f9'
+            'SKIP')
 
 prepare() {
   cd linux-${_major}
