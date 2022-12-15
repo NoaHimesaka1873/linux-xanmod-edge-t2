@@ -211,10 +211,8 @@ prepare() {
   fi
 
   echo "Setting config..."
-  cp ../config .config
   cat $srcdir/patches/extra_config >> .config
   make LLVM=$_LLVM LLVM_IAS=$_LLVM olddefconfig
-  diff -u ../config .config || :
 
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
