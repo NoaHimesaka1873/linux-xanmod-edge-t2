@@ -111,7 +111,7 @@ done
 
 sha256sums=('2ca1f17051a430f6fed1196e4952717507171acfd97d96577212502703b25deb'
             'SKIP'
-            'b044b25b37117f3de7878e6f9e94bd6e215ff8ec949ced8898000d9b52d1d55a'
+            '7130abc76dffe02949c50f4bfc76aa4d0c2f5a98411b5faabd3a4e864b97c891'
             'a4968ae2089dcf17e0b308eef2c5b5b0520c574262b6255daa583983f53ca1f9'
             'SKIP')
 
