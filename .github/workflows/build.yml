@@ -9,7 +9,7 @@ jobs:
     - name: Build In Docker
       if: ${{ !contains(github.event.head_commit.message, '[no build]') }}
       run: |
-        BUILDUSER=renakoamaori
+        BUILDUSER=senaajisai
         BUILDGROUP=watanare
         HOSTNAME=theres-no-freaking-way-ill-be-your-lover-unless
         cat << EOF > entrypoint.sh
@@ -57,7 +57,7 @@ jobs:
          draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
          prerelease: ${{ contains(github.event.head_commit.message, '[prerel]') }}
          body: |
-          This release features Renako Amaori from [There’s No Freaking Way I’ll be Your Lover! Unless…](https://sevenseasentertainment.com/series/theres-no-freaking-way-ill-be-your-lover-unless-light-novel/)!
+          This release features Sena Ajisai from [There’s No Freaking Way I’ll be Your Lover! Unless…](https://sevenseasentertainment.com/series/theres-no-freaking-way-ill-be-your-lover-unless-light-novel/)!
           Every major release will feature new anime/manga and minor releases will have different characters!
           Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
       env:
