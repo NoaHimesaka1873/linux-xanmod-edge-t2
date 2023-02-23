@@ -70,13 +70,13 @@ fi
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
-pkgbase=linux-xanmod-edge-t2
+pkgbase=linux-xanmod-lts-t2
 _major=6.1
-pkgver=${_major}.12
+pkgver=${_major}.13
 _branch=6.x
 xanmod=1
 pkgrel=1
-pkgdesc='Linux Xanmod - Latest Mainline (EDGE) for T2 Macs'
+pkgdesc='Linux Xanmod - LTS for T2 Macs'
 url="http://www.xanmod.org/"
 arch=(x86_64)
 
@@ -111,7 +111,7 @@ done
 
 sha256sums=('2ca1f17051a430f6fed1196e4952717507171acfd97d96577212502703b25deb'
             'SKIP'
-            '328bed9ad8fbb8162df83f23b63bc284f1d4ee89f0b2e21ee7e5d8aae47d69c2'
+            '5f1e9f33d9b4f623953740f346340f77a1317b9b01eb9106f7fa1825a2986812'
             'a4968ae2089dcf17e0b308eef2c5b5b0520c574262b6255daa583983f53ca1f9'
             'SKIP')
 
