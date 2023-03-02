@@ -18,15 +18,15 @@ jobs:
         groupadd -r $BUILDGROUP
         useradd $BUILDUSER -g $BUILDGROUP -m
         passwd -d $BUILDUSER
-        pacman -Syu --noconfirm --needed sudo base-devel git
+        pacman -Syu --noconfirm --needed sudo base-devel
         printf '$BUILDUSER ALL=(ALL) ALL\\n' | tee -a /etc/sudoers
         chown -R $BUILDUSER:$BUILDGROUP ./
         sudo -u $BUILDUSER gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
-        sudo -u $BUILDUSER bash -c 'export MAKEFLAGS=j\$(nproc) && env _microarchitecture=38 use_tracers=y use_numa=n _compress_modules=y makepkg -s --noconfirm'
+        sudo -u $BUILDUSER bash -c 'export MAKEFLAGS=j\$(nproc) && makepkg -s --noconfirm'
         EOF
 
         docker run -h $HOSTNAME -t -v $PWD:/build archlinux /bin/bash /build/entrypoint.sh
-
+    
     - name: Print sha512sums
       if: ${{ !contains(github.event.head_commit.message, '[no build]') }}
       run: sha512sum *.pkg.tar.*
@@ -37,7 +37,7 @@ jobs:
       with:
         name: built-packages
         path: ${{ github.workspace }}/*.pkg.tar.*
-
+        
     - name: Create Tag
       if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') }}
       id: create_tag
@@ -53,7 +53,7 @@ jobs:
            ${{ github.workspace }}/*.zip
            ${{ github.workspace }}/*.pkg.tar.*
          tag_name: v${{ steps.create_tag.outputs.tag }}
-         name: ${{ steps.create_tag.outputs.tag }} - Release Watanare 
+         name: ${{ steps.create_tag.outputs.tag }} - Release Watanare
          draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
          prerelease: ${{ contains(github.event.head_commit.message, '[prerel]') }}
          body: |

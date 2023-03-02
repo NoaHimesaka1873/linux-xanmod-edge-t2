@@ -71,8 +71,8 @@ fi
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-edge-t2
-_major=6.1
-pkgver=${_major}.11
+_major=6.2
+pkgver=${_major}.1
 _branch=6.x
 xanmod=1
 pkgrel=1
@@ -111,7 +111,7 @@ done
 
 sha256sums=('2ca1f17051a430f6fed1196e4952717507171acfd97d96577212502703b25deb'
             'SKIP'
-            '57e1367a35b5c634edfd54a8ea6156d07a4b676a7ad9303d99e4ca6b5c656661'
+            '328bed9ad8fbb8162df83f23b63bc284f1d4ee89f0b2e21ee7e5d8aae47d69c2'
             'a4968ae2089dcf17e0b308eef2c5b5b0520c574262b6255daa583983f53ca1f9'
             'SKIP')
 
@@ -236,6 +236,7 @@ _package() {
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
   provides=(VIRTUALBOX-GUEST-MODULES
+            linux
             linux-t2
             WIREGUARD-MODULE
             KSMBD-MODULE
@@ -262,7 +263,7 @@ _package() {
 
 _package-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel"
-  provides=(linux-t2-headers)
+  provides=(linux-headers linux-t2-headers)
   depends=(pahole)
 
   cd linux-${_major}
