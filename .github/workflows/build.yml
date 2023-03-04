@@ -9,16 +9,16 @@ jobs:
     - name: Build In Docker
       if: ${{ !contains(github.event.head_commit.message, '[no build]') }}
       run: |
-        BUILDUSER=raetaylor
-        BUILDGROUP=wataoshi
-        HOSTNAME=im-in-love-with-the-villainess
+        BUILDUSER=senaajisai
+        BUILDGROUP=watanare
+        HOSTNAME=theres-no-freaking-way-ill-be-your-lover-unless
         cat << EOF > entrypoint.sh
         cd /build
         timedatectl set-timezone Asia/Seoul
         groupadd -r $BUILDGROUP
         useradd $BUILDUSER -g $BUILDGROUP -m
         passwd -d $BUILDUSER
-        pacman -Syu --noconfirm --needed sudo base-devel git
+        pacman -Syu --noconfirm --needed sudo base-devel
         printf '$BUILDUSER ALL=(ALL) ALL\\n' | tee -a /etc/sudoers
         chown -R $BUILDUSER:$BUILDGROUP ./
         sudo -u $BUILDUSER gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
@@ -53,11 +53,11 @@ jobs:
            ${{ github.workspace }}/*.zip
            ${{ github.workspace }}/*.pkg.tar.*
          tag_name: v${{ steps.create_tag.outputs.tag }}
-         name: ${{ steps.create_tag.outputs.tag }} - Release Wataoshi
+         name: ${{ steps.create_tag.outputs.tag }} - Release Watanare
          draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
          prerelease: ${{ contains(github.event.head_commit.message, '[prerel]') }}
          body: |
-          This release features Rae Taylor from [I'm in Love with the Villainess](https://sevenseasentertainment.com/series/im-in-love-with-the-villainess-light-novel/), which got anime adaptation announcement recently!
+          This release features Sena Ajisai from [There’s No Freaking Way I’ll be Your Lover! Unless…](https://sevenseasentertainment.com/series/theres-no-freaking-way-ill-be-your-lover-unless-light-novel/)!
           Every major release will feature new anime/manga and minor releases will have different characters!
           Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
       env:
