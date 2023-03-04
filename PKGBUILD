@@ -13,7 +13,7 @@
 ## Default is: 0 => generic
 ## Good option if your package is for one machine: 98 (Intel native) or 99 (AMD native)
 if [ -z ${_microarchitecture+x} ]; then
-  _microarchitecture=0
+  _microarchitecture=38
 fi
 
 ## Disable NUMA since most users do not have multiple processors. Breaks CUDA/NvEnc.
@@ -24,26 +24,28 @@ if [ -z ${use_numa+x} ]; then
   use_numa=y
 fi
 
-## For performance you can disable FUNCTION_TRACER/GRAPH_TRACER. Limits debugging and analyzing of the kernel.
-## Stock Archlinux and Xanmod have this enabled. 
-## Set variable "use_tracers" to: n to disable (possibly increase performance)
-##                                y to enable  (stock default)
+## Since upstream disabled CONFIG_STACK_TRACER (limits debugging and analyzing of the kernel)
+## you can enable them setting this option. Caution, because they have an impact in performance.
+## Stock Archlinux has this enabled. 
+## Set variable "use_tracers" to: n to disable (possibly increase performance, XanMod default)
+##                                y to enable  (Archlinux default)
 if [ -z ${use_tracers+x} ]; then
-  use_tracers=y
+  use_tracers=n
 fi
 
-## NOTICE: clang config is not ready yet in 5.17.x
+# Unique compiler supported upstream is GCC
 ## Choose between GCC and CLANG config (default is GCC)
-if [ -z ${_compiler+x} ] || [ "$_compiler" = "clang" ]; then
-  _compiler=gcc
+## Use the environment variable "_compiler=clang"
+if [ "${_compiler}" = "clang" ]; then
+  _compiler_flags="CC=clang HOSTCC=clang LLVM=1 LLVM_IAS=1"
 fi
 
-# Choose between the 3 main configs for EDGE branch. Default x86-64-v2 which use CONFIG_GENERIC_CPU2:
-# Possible values: config_x86-64 / config_x86-64-v2 (default) / config_x86-64-v3
+# Choose between the 4 main configs for stable branch. Default x86-64-v1 which use CONFIG_GENERIC_CPU2:
+# Possible values: config_x86-64-v1 (default) / config_x86-64-v2 / config_x86-64-v3 / config_x86-64-v4
 # This will be overwritten by selecting any option in microarchitecture script
 # Source files: https://github.com/xanmod/linux/tree/5.17/CONFIGS/xanmod/gcc
 if [ -z ${_config+x} ]; then
-  _config=config_x86-64-v2
+  _config=config_x86-64-v3
 fi
 
 # Compress modules with ZSTD (to save disk space)
@@ -70,13 +72,13 @@ fi
 
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
-pkgbase=linux-xanmod-edge-t2
+pkgbase=linux-xanmod-t2
 _major=6.2
-pkgver=${_major}.1
+pkgver=${_major}.2
 _branch=6.x
 xanmod=1
-pkgrel=1
-pkgdesc='Linux Xanmod - Latest Mainline (EDGE) for T2 Macs'
+pkgrel=${xanmod}
+pkgdesc='Linux Xanmod - Current Stable (CURRENT) for Macs with T2 security chip'
 url="http://www.xanmod.org/"
 arch=(x86_64)
 
@@ -124,25 +126,24 @@ prepare() {
   msg2 "Setting version..."
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
+  echo "${pkgbase#linux-xanmod}" > localversion.20-pkgname
 
-  t2linux_patches=$(ls $srcdir/patches | grep -e \.patch$)
-  mv $srcdir/patches/*.patch $srcdir/
+  # Archlinux patches
   local src
   for src in "${source[@]}" $t2linux_patches; do
     src="${src%%::*}"
     src="${src##*/}"
     [[ $src = *.patch ]] || continue
-    echo "Applying patch $src..."
+    msg2 "Applying patch $src..."
     patch -Np1 < "../$src"
   done
 
   # Applying configuration
-  cp -vf CONFIGS/xanmod/${_compiler}/${_config} .config
+  cp -vf CONFIGS/xanmod/gcc/${_config} .config
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
     scripts/config --enable LTO_CLANG_THIN
-    _LLVM=1
   fi
 
   # CONFIG_STACK_VALIDATION gives better stack traces. Also is enabled in all official kernel packages by Archlinux team
@@ -153,11 +154,12 @@ prepare() {
                  --enable CONFIG_IKCONFIG_PROC
 
   # User set. See at the top of this file
-  if [ "$use_tracers" = "n" ]; then
-    msg2 "Disabling FUNCTION_TRACER/GRAPH_TRACER only if we are not compiling with clang..."
+  if [ "$use_tracers" = "y" ]; then
+    msg2 "Enabling CONFIG_FTRACE only if we are not compiling with clang..."
     if [ "${_compiler}" = "gcc" ]; then
-      scripts/config --disable CONFIG_FUNCTION_TRACER \
-                     --disable CONFIG_STACK_TRACER
+      scripts/config --enable CONFIG_FTRACE \
+                     --enable CONFIG_FUNCTION_TRACER \
+                     --enable CONFIG_STACK_TRACER
     fi
   fi
 
@@ -170,12 +172,11 @@ prepare() {
   if [ "$_compress_modules" = "y" ]; then
     scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
   fi
-  
-  
+
   # Let's user choose microarchitecture optimization in GCC
   # Use default microarchitecture only if we have not choosen another microarchitecture
   if [ "$_microarchitecture" -ne "0" ]; then
-    sh ../choose-gcc-optimization.sh $_microarchitecture
+    ../choose-gcc-optimization.sh $_microarchitecture
   fi
 
   # This is intended for the people that want to build this package with their own config
@@ -203,22 +204,20 @@ prepare() {
   if [ "$_localmodcfg" = "y" ]; then
     if [ -f $HOME/.config/modprobed.db ]; then
       msg2 "Running Steven Rostedt's make localmodconfig now"
-      make LLVM=$_LLVM LLVM_IAS=$_LLVM LSMOD=$HOME/.config/modprobed.db localmodconfig
+      make ${_compiler_flags} LSMOD=$HOME/.config/modprobed.db localmodconfig
     else
       msg2 "No modprobed.db data found"
       exit 1
     fi
   fi
 
-  echo "Setting config..."
-  cat $srcdir/patches/extra_config >> .config
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM olddefconfig
+  make ${_compiler_flags} olddefconfig
 
   make -s kernelrelease > version
   msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
 
   if [ "$_makenconfig" = "y" ]; then
-    make LLVM=$_LLVM LLVM_IAS=$_LLVM nconfig
+    make ${_compiler_flags} nconfig
   fi
 
   # save configuration for later reuse
@@ -227,11 +226,11 @@ prepare() {
 
 build() {
   cd linux-${_major}
-  make LLVM=$_LLVM LLVM_IAS=$_LLVM all
+  make ${_compiler_flags} all
 }
 
 _package() {
-  pkgdesc="The Linux kernel and modules with Xanmod patches"
+  pkgdesc="The Linux kernel and modules with Xanmod patches for Macs with T2 security chip"
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
@@ -241,6 +240,7 @@ _package() {
             WIREGUARD-MODULE
             KSMBD-MODULE
             NTFS3-MODULE)
+  replaces=(linux-xanmod-edge-t2)
 
   cd linux-${_major}
   local kernver="$(<version)"
@@ -265,6 +265,7 @@ _package-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel"
   provides=(linux-headers linux-t2-headers)
   depends=(pahole)
+  replaces=(linux-xanmod-edge-t2-headers)
 
   cd linux-${_major}
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
@@ -280,7 +281,7 @@ _package-headers() {
   install -Dt "$builddir/tools/objtool" tools/objtool/objtool
 
   # required when DEBUG_INFO_BTF_MODULES is enabled
-  if [ -f "$builddir/tools/bpf/resolve_btfids" ]; then install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids ; fi
+  if [ -f "tools/bpf/resolve_btfids/resolve_btfids" ]; then install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids ; fi
 
   msg2 "Installing headers..."
   cp -t "$builddir" -a include

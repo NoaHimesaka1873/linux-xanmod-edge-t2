@@ -66,7 +66,7 @@ cat << EOF
    98) Intel-Native optimizations autodetected by GCC
    99) AMD-Native optimizations autodetected by GCC
 
-    0) Generic x64-v2 (default)
+    0) Generic x64-v1 (default)
     
 EOF
 
@@ -126,7 +126,7 @@ case $answer in
    94) Microarchitecture=CONFIG_GENERIC_CPU4 ;;
    98) Microarchitecture=CONFIG_MNATIVE_INTEL ;;
    99) Microarchitecture=CONFIG_MNATIVE_AMD ;;
-    *) default=CONFIG_GENERIC_CPU2 ;;
+    *) default=CONFIG_GENERIC_CPU ;;
 esac
 
 warning "According to PKGBUILD variable _microarchitecture, your choice is $answer"
@@ -146,3 +146,4 @@ sed -e 's|^CONFIG_GENERIC_CPU4=y|# CONFIG_GENERIC_CPU4 is not set|g' -i .config
 sed -e "s|^# $Microarchitecture is not set|$Microarchitecture=y|g" -i .config
 
 echo
+
