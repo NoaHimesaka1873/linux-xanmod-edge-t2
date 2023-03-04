@@ -113,8 +113,8 @@ done
 
 sha256sums=('74862fa8ab40edae85bb3385c0b71fe103288bce518526d63197800b3cbdecb1'
             'SKIP'
-            '8fd0f1e69f53e779fcbaddfa616bf5b7d651a3cec80c952217718bca474481d2'
-            'a4b97a0a04401b7b96925c3cf8aa4d7573a81bbb364a44d5189f2a55cb2f7a2c'
+            '688a5ce5406c24c04122e3652a8b6b2983feb55355aef13f8fd65444586cd38a'
+            '205d735c1ebc0ba28ce21de4b3b290dc275837c1a576fca0460c1bde482cce10'
             'SKIP')
 
 prepare() {
