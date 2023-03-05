@@ -77,7 +77,7 @@ _major=6.2
 pkgver=${_major}.2
 _branch=6.x
 xanmod=1
-pkgrel=${xanmod}
+pkgrel=2
 pkgdesc='Linux Xanmod - Current Stable (CURRENT) for Macs with T2 security chip'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -127,7 +127,9 @@ prepare() {
   scripts/setlocalversion --save-scmversion
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux-xanmod}" > localversion.20-pkgname
-
+  
+  t2linux_patches=$(ls $srcdir/patches | grep -e \.patch$)
+  mv $srcdir/patches/*.patch $srcdir/
   # Archlinux patches
   local src
   for src in "${source[@]}" $t2linux_patches; do
