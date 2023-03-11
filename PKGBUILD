@@ -74,10 +74,10 @@ fi
 
 pkgbase=linux-xanmod-t2
 _major=6.2
-pkgver=${_major}.2
+pkgver=${_major}.3
 _branch=6.x
 xanmod=1
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux Xanmod - Current Stable (CURRENT) for Macs with T2 security chip'
 url="http://www.xanmod.org/"
 arch=(x86_64)
@@ -113,7 +113,7 @@ done
 
 sha256sums=('74862fa8ab40edae85bb3385c0b71fe103288bce518526d63197800b3cbdecb1'
             'SKIP'
-            '688a5ce5406c24c04122e3652a8b6b2983feb55355aef13f8fd65444586cd38a'
+            '557ea9735dbb68c83b4684fd42b465b2cd12445519469c091b9bed926e37810a'
             '205d735c1ebc0ba28ce21de4b3b290dc275837c1a576fca0460c1bde482cce10'
             'SKIP')
 
@@ -142,6 +142,7 @@ prepare() {
 
   # Applying configuration
   cp -vf CONFIGS/xanmod/gcc/${_config} .config
+  cat $srcdir/patches/extra_config >> .config
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
