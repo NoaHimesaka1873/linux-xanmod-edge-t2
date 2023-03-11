@@ -74,7 +74,7 @@ fi
 
 pkgbase=linux-xanmod-lts-t2
 _major=6.1
-pkgver=${_major}.15
+pkgver=${_major}.16
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -113,7 +113,7 @@ done
 
 sha256sums=('2ca1f17051a430f6fed1196e4952717507171acfd97d96577212502703b25deb'
             'SKIP'
-            '688d9da899bbf5758865d648dd99eaffafb4bb6a67c2d3182c2cd249e4a6be8e'
+            '06241fa671f1a1ff795a3672a2b3412f459360be95077da7a8c8825c211bc0e7'
             '7ed3138b0a3d74378decf75796a3392db13b51117e9581fcb0c77a8835fbd682'
             'SKIP')
 
@@ -140,6 +140,7 @@ prepare() {
 
   # Applying configuration
   cp -vf CONFIGS/xanmod/gcc/${_config} .config
+  cat $srcdir/patches/extra_config >> .config
   # enable LTO_CLANG_THIN
   if [ "${_compiler}" = "clang" ]; then
     scripts/config --disable LTO_CLANG_FULL
