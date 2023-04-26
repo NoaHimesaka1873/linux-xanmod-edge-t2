@@ -73,8 +73,8 @@ fi
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-t2
-_major=6.2
-pkgver=${_major}.12
+_major=6.3
+pkgver=${_major}.0
 _branch=6.x
 xanmod=1
 pkgrel=1
@@ -111,10 +111,10 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('74862fa8ab40edae85bb3385c0b71fe103288bce518526d63197800b3cbdecb1'
+sha256sums=('ba3491f5ed6bd270a370c440434e3d69085fcdd528922fa01e73d7657db73b1e'
             'SKIP'
-            '7b6faa41eaa12696e9cd593f0806968bf8170a4cfe7ef38debf49bac91367c53'
-            '205d735c1ebc0ba28ce21de4b3b290dc275837c1a576fca0460c1bde482cce10'
+            'ed7f827ba466a67cc7f5319013f3e1844f81eec6dcf464d7eb95d42e7a19f04a'
+            '8f00a282112f913a30b2aabc757fd14da81b6e71af05e1fa3627e0c2a1a602d2'
             'SKIP')
 
 prepare() {

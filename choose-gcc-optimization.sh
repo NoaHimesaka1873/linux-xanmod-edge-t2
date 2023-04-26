@@ -135,7 +135,7 @@ sleep 5
 
 _defaultmicro=$(grep ^CONFIG_LOCALVERSION .config)
 if [ -z "${default}" ]; then
-    _localversion=-Wataoshi-T2
+    _localversion=-Painoko-T2
     sed -e "s|^$_defaultmicro|CONFIG_LOCALVERSION=\"$_localversion\"|g" -i .config
 fi
 
