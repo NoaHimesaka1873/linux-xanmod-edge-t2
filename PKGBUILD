@@ -74,7 +74,7 @@ fi
 
 pkgbase=linux-xanmod-lts-t2
 _major=6.1
-pkgver=${_major}.27
+pkgver=${_major}.28
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -113,7 +113,7 @@ done
 
 sha256sums=('2ca1f17051a430f6fed1196e4952717507171acfd97d96577212502703b25deb'
             'SKIP'
-            '60a8df62c09bbaceb5b44e7fa764346c143402717a93fabba8716a75f4125dc1'
+            'e27c2a60a2e9fa6b4fef553d04333cd1e7b465e6508eeda29f8240bad7077fea'
             '7ed3138b0a3d74378decf75796a3392db13b51117e9581fcb0c77a8835fbd682'
             'SKIP')
 
