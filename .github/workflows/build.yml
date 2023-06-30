@@ -52,12 +52,11 @@ jobs:
            ${{ github.workspace }}/*.zip
            ${{ github.workspace }}/*.pkg.tar.*
          tag_name: v${{ steps.create_tag.outputs.tag }}
-         name: ${{ steps.create_tag.outputs.tag }} - Release Painoko
+         name: ${{ steps.create_tag.outputs.tag }} - Release Yagakimi
          draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
          prerelease: ${{ contains(github.event.head_commit.message, '[prerel]') }}
          body: |
-          This release features Makoto Hanaoka from [Senpai is an Otokonoko](https://www.webtoons.com/en/romance/senpai-is-an-otokonoko/list?title_no=5137), which got anime adaptation announcement recently!
-          (and yes, I remeber using this for Manjaro 5.17, but it only had one release so I'm reusing it.)
+          This release features Yuu Koito from [Bloom Into You](https://sevenseasentertainment.com/series/bloom-into-you/)!
           Every major release will feature new anime/manga and minor releases will have different characters!
           Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
       env:
