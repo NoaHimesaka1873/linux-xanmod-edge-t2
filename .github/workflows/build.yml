@@ -1,5 +1,5 @@
 name: Build Kernel Package
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,9 +9,9 @@ jobs:
     - name: Build In Docker
       if: ${{ !contains(github.event.head_commit.message, '[no build]') }}
       run: |
-        BUILDUSER=makotohanaoka
-        BUILDGROUP=painoko
-        HOSTNAME=senpai-is-an-otokonoko
+        BUILDUSER=yuukoito
+        BUILDGROUP=yagakimi
+        HOSTNAME=bloom-into-you
         cat << EOF > entrypoint.sh
         cd /build
         groupadd -r $BUILDGROUP
@@ -38,14 +38,14 @@ jobs:
         path: ${{ github.workspace }}/*.pkg.tar.*
         
     - name: Create Tag
-      if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') }}
+      if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') && github.event_name != 'pull_request' }}
       id: create_tag
       run: |
         source PKGBUILD
         echo "tag=${pkgver}" >> $GITHUB_OUTPUT
         echo $pkgver $pkgrel
     - name: Release
-      if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') }}
+      if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') && github.event_name != 'pull_request' }}
       uses: softprops/action-gh-release@v1
       with:
          files: |
