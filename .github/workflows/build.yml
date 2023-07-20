@@ -21,7 +21,9 @@ jobs:
         printf '$BUILDUSER ALL=(ALL) ALL\\n' | tee -a /etc/sudoers
         chown -R $BUILDUSER:$BUILDGROUP ./
         sudo -u $BUILDUSER gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
+        df -h
         sudo -u $BUILDUSER bash -c 'export MAKEFLAGS=j\$(nproc) && makepkg -s --noconfirm'
+        df -h
         EOF
 
         docker run -h $HOSTNAME -t -v $PWD:/build archlinux /bin/bash /build/entrypoint.sh
