@@ -74,9 +74,11 @@ fi
 
 pkgbase=linux-xanmod-t2
 _major=6.4
-pkgver=${_major}.8
+pkgver=${_major}.10
 _branch=6.x
 xanmod=1
+_revision=
+_sf_branch=main
 pkgrel=1
 pkgdesc='Linux Xanmod - Current Stable (CURRENT) for Macs with T2 security chip'
 url="http://www.xanmod.org/"
@@ -93,7 +95,7 @@ options=('!strip')
 _srcname="linux-${pkgver}-xanmod${xanmod}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
-        "https://github.com/xanmod/linux/releases/download/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
+        "patch-${pkgver}-xanmod${xanmod}${_revision}.xz::https://sourceforge.net/projects/xanmod/files/releases/${_sf_branch}/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
         choose-gcc-optimization.sh
         patches::git+https://github.com/t2linux/linux-t2-patches
 )
@@ -113,7 +115,7 @@ done
 
 sha256sums=('8fa0588f0c2ceca44cac77a0e39ba48c9f00a6b9dc69761c02a5d3efac8da7f3'
             'SKIP'
-            '8e3ada9a004bc6506e083fc232234bb4f422a51f37c8398fc5527200c27aa858'
+            '7040505e4388b7322eab4a15c321f8da5368298fc3d926bc402228409a947cc5'
             '21188aaf8db9897b9e5d27d703fbf5bc21572a4323133d70f13e0be9fb1f5012'
             'SKIP')
 
