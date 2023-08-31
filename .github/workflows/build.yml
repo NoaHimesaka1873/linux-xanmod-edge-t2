@@ -9,9 +9,9 @@ jobs:
     - name: Build In Docker
       if: ${{ !contains(github.event.head_commit.message, '[no build]') }}
       run: |
-        BUILDUSER=yuukoito
-        BUILDGROUP=yagakimi
-        HOSTNAME=bloom-into-you
+        BUILDUSER=mihatehiura
+        BUILDGROUP=ototsuku
+        HOSTNAME=i-think-i-turned-my-childhood-friend-into-a-girl
         cat << EOF > entrypoint.sh
         cd /build
         groupadd -r $BUILDGROUP
@@ -52,13 +52,14 @@ jobs:
            ${{ github.workspace }}/*.zip
            ${{ github.workspace }}/*.pkg.tar.*
          tag_name: v${{ steps.create_tag.outputs.tag }}
-         name: ${{ steps.create_tag.outputs.tag }} - Release Yagakimi
+         name: ${{ steps.create_tag.outputs.tag }} - Release Ototsuku 
          draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
          prerelease: ${{ contains(github.event.head_commit.message, '[prerel]') }}
          body: |
-          This release features Yuu Koito from [Bloom Into You](https://sevenseasentertainment.com/series/bloom-into-you/)!
-          Every major release will feature new anime/manga and minor releases will have different characters!
-          Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
+           This release features Mihate Hiura from *Koisuru (Otome) No Tsukurikatta* (Also known as *[I Think I Turned My Childhood Friend Into a Girl](https://sevenseasentertainment.com/series/i-think-i-turned-my-childhood-friend-into-a-girl/)*)
+           Every major release will feature new anime/manga and minor releases will have different characters!
+           Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
+           (Yes, we know we used Ototsuku in 5.18, we are reusing them since they were from Linux 5.)
       env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
