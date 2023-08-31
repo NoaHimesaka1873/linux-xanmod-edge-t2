@@ -9,6 +9,9 @@ jobs:
     - name: Build In Docker
       if: ${{ !contains(github.event.head_commit.message, '[no build]') }}
       run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/ghc
         BUILDUSER=senaajisai
         BUILDGROUP=watanare
         HOSTNAME=theres-no-freaking-way-ill-be-your-lover-unless
