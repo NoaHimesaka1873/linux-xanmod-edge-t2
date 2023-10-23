@@ -74,7 +74,7 @@ fi
 
 pkgbase=linux-xanmod-lts-t2
 _major=6.1
-pkgver=${_major}.57
+pkgver=${_major}.59
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -111,7 +111,7 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('2ca1f17051a430f6fed1196e4952717507171acfd97d96577212502703b25deb'
+sha256sums=('SKIP'
             'SKIP'
             '15c484955e2b3b381b9332858d17537959f3150285f95941031df2c7c29f8450'
             '7ed3138b0a3d74378decf75796a3392db13b51117e9581fcb0c77a8835fbd682'
