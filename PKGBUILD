@@ -258,7 +258,7 @@ _package() {
   make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
 
   # remove build and source links
-  rm "$modulesdir"/{source,build}
+  rm "$modulesdir"/build
 }
 
 _package-headers() {
