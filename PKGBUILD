@@ -113,10 +113,10 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('d926a06c63dd8ac7df3f86ee1ffc2ce2a3b81a2d168484e76b5b389aba8e56d0'
+sha256sums=('ef31144a2576d080d8c31698e83ec9f66bf97c677fa2aaf0d5bbb9f3345b1069'
             'SKIP'
-            '674be54d39a405cd11d8cbd9c2604f5e6e7fedee6b37d307edbb8ac46bc6a27f'
-            'c117c61487dbbf2ec9212cf2fe5eaf181cac1d70078b4f29014b76447bef41d3'
+            'e364af5692a620d203e1a4605b5a43f81b3f2b5eb77d2a54dbb0e132ab21e28c'
+            'fe39b593974f6d3f34851785b3282685b5afe6e1965811c60c50c725e6392f1b'
             'SKIP')
 
 prepare() {
