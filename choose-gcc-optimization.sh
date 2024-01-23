@@ -135,7 +135,7 @@ sleep 5
 
 _defaultmicro=$(grep ^CONFIG_LOCALVERSION .config)
 if [ -z "${default}" ]; then
-    _localversion=-YuruYuri-T2
+    _localversion=-Adashima-T2
     sed -e "s|^$_defaultmicro|CONFIG_LOCALVERSION=\"$_localversion\"|g" -i .config
 fi
 
