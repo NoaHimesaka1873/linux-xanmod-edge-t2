@@ -12,9 +12,9 @@ jobs:
         sudo rm -rf /usr/share/dotnet
         sudo rm -rf /usr/local/lib/android
         sudo rm -rf /opt/ghc
-        BUILDUSER=senaajisai
-        BUILDGROUP=watanare
-        HOSTNAME=theres-no-freaking-way-ill-be-your-lover-unless
+        BUILDUSER=yuifunami
+        BUILDGROUP=gorakubu
+        HOSTNAME=YuruYuri
         cat << EOF > entrypoint.sh
         cd /build
         timedatectl set-timezone Asia/Seoul
@@ -42,27 +42,28 @@ jobs:
         path: ${{ github.workspace }}/*.pkg.tar.*
         
     - name: Create Tag
-      if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') }}
+      if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') && github.event_name != 'pull_request' }}
       id: create_tag
       run: |
         source PKGBUILD
         echo "tag=${pkgver}" >> $GITHUB_OUTPUT
         echo $pkgver $pkgrel
     - name: Release
-      if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') }}
+      if: ${{ !contains(github.event.head_commit.message, '[no rel]') && !contains(github.event.head_commit.message, '[no build]') && github.event_name != 'pull_request' }}
       uses: softprops/action-gh-release@v1
       with:
          files: |
            ${{ github.workspace }}/*.zip
            ${{ github.workspace }}/*.pkg.tar.*
          tag_name: v${{ steps.create_tag.outputs.tag }}
-         name: ${{ steps.create_tag.outputs.tag }} - Release Watanare
+         name: ${{ steps.create_tag.outputs.tag }} - Release YuruYuri
          draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
          prerelease: ${{ contains(github.event.head_commit.message, '[prerel]') }}
          body: |
-          This release features Sena Ajisai from [There’s No Freaking Way I’ll be Your Lover! Unless…](https://sevenseasentertainment.com/series/theres-no-freaking-way-ill-be-your-lover-unless-light-novel/)!
-          Every major release will feature new anime/manga and minor releases will have different characters!
-          Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
+           This release features Yui Funami from YuruYuri!
+           Every major release will feature new anime/manga and minor releases will have different characters!
+           Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
+           (Yes, we know we used YuruYuri in 5.15, we are reusing them since they were from Linux 5 and only used for one release.) 
       env:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

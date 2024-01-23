@@ -73,8 +73,8 @@ fi
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-lts-t2
-_major=6.1
-pkgver=${_major}.70
+_major=6.6
+pkgver=${_major}.13
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -93,9 +93,9 @@ options=('!strip')
 _srcname="linux-${pkgver}-xanmod${xanmod}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
-        "https://downloads.sourceforge.net/project/xanmod/releases/lts/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
+        "https://downloads.sourceforge.net/project/xanmod/releases/main/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
-        patches::git+https://github.com/t2linux/linux-t2-patches#branch=6.1
+        patches::git+https://github.com/t2linux/linux-t2-patches#branch=6.6
 )
         #"patch-${pkgver}-xanmod${xanmod}.xz::https://sourceforge.net/projects/xanmod/files/releases/stable/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz/download"
 validpgpkeys=(
@@ -111,10 +111,10 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('2ca1f17051a430f6fed1196e4952717507171acfd97d96577212502703b25deb'
+sha256sums=('d926a06c63dd8ac7df3f86ee1ffc2ce2a3b81a2d168484e76b5b389aba8e56d0'
             'SKIP'
-            'af46e4cc47377b35aae0d0bccef300f4f4225b539d547da6e850c6c05caf0068'
-            '7ed3138b0a3d74378decf75796a3392db13b51117e9581fcb0c77a8835fbd682'
+            '11bae6e2368a98b49918b6dcf97d7d431657126d28f97cfad26c4c36b6e2e205'
+            'c117c61487dbbf2ec9212cf2fe5eaf181cac1d70078b4f29014b76447bef41d3'
             'SKIP')
 
 prepare() {
