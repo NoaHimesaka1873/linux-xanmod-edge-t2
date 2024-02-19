@@ -74,7 +74,7 @@ fi
 
 pkgbase=linux-xanmod-lts-t2
 _major=6.6
-pkgver=${_major}.16
+pkgver=${_major}.17
 _branch=6.x
 xanmod=1
 pkgrel=${xanmod}
@@ -93,7 +93,7 @@ options=('!strip')
 _srcname="linux-${pkgver}-xanmod${xanmod}"
 
 source=("https://cdn.kernel.org/pub/linux/kernel/v${_branch}/linux-${_major}.tar."{xz,sign}
-        "https://downloads.sourceforge.net/project/xanmod/releases/main/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
+        "https://downloads.sourceforge.net/project/xanmod/releases/lts/${pkgver}-xanmod${xanmod}/patch-${pkgver}-xanmod${xanmod}.xz"
         choose-gcc-optimization.sh
         patches::git+https://github.com/t2linux/linux-t2-patches#branch=6.6
 )
@@ -113,7 +113,7 @@ done
 
 sha256sums=('d926a06c63dd8ac7df3f86ee1ffc2ce2a3b81a2d168484e76b5b389aba8e56d0'
             'SKIP'
-            '75a5a020c7a152a8962fc27c8e19b70187b223263b4cc490b293cb741a5e1c68'
+            '915c10da73a40130e9fe854a59f158686df01c810809b75c0318cd6a0f227931'
             'c117c61487dbbf2ec9212cf2fe5eaf181cac1d70078b4f29014b76447bef41d3'
             'SKIP')
 
