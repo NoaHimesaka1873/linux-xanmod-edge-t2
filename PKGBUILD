@@ -74,11 +74,11 @@ fi
 
 pkgbase=linux-xanmod-t2
 _major=6.8
-pkgver=${_major}.4
+pkgver=${_major}.7
 _branch=6.x
 xanmod=1
 _revision=
-_sf_branch=edge
+_sf_branch=main
 pkgrel=1
 pkgdesc='Linux Xanmod - Current Stable (CURRENT) for Macs with T2 security chip'
 url="http://www.xanmod.org/"
@@ -115,7 +115,7 @@ done
 
 sha256sums=('c969dea4e8bb6be991bbf7c010ba0e0a5643a3a8d8fb0a2aaa053406f1e965f3'
             'SKIP'
-            'afe4c3199355f1e81a9f86ab6f0702f6ec8a2073dc436c266a4fd9336c455a49'
+            '415349ea19a09e64df31a7792b08df2465e79206441ff0af26cab81bf4486cfa'
             'fe39b593974f6d3f34851785b3282685b5afe6e1965811c60c50c725e6392f1b'
             'SKIP')
 
