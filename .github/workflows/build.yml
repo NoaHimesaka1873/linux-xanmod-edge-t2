@@ -12,15 +12,15 @@ jobs:
         sudo rm -rf /usr/share/dotnet
         sudo rm -rf /usr/local/lib/android
         sudo rm -rf /opt/ghc
-        BUILDUSER=sakuraadachi
-        BUILDGROUP=adashima
-        HOSTNAME=Adachi-and-Shimamura
+        BUILDUSER=renakoamaori
+        BUILDGROUP=quintet
+        HOSTNAME=There-s-No-Freaking-Way-I-ll-Be-Your-Lover-Unless
         cat << EOF > entrypoint.sh
         cd /build
         groupadd -r $BUILDGROUP
         useradd $BUILDUSER -g $BUILDGROUP -m
         passwd -d $BUILDUSER
-        pacman -Syu --noconfirm --needed sudo base-devel git
+        pacman -Syu --noconfirm --needed sudo base-devel git python-yaml
         printf '$BUILDUSER ALL=(ALL) ALL\\n' | tee -a /etc/sudoers
         chown -R $BUILDUSER:$BUILDGROUP ./
         sudo -u $BUILDUSER gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
@@ -55,11 +55,11 @@ jobs:
            ${{ github.workspace }}/*.zip
            ${{ github.workspace }}/*.pkg.tar.*
          tag_name: v${{ steps.create_tag.outputs.tag }}
-         name: ${{ steps.create_tag.outputs.tag }} - Release Adashima
+         name: ${{ steps.create_tag.outputs.tag }} - Release Watanare
          draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
          prerelease: ${{ contains(github.event.head_commit.message, '[prerel]') }}
          body: |
-           This release features Sakura Adachi from Adachi and Shimamura!
+           This release features Renako Amaori from There's No Freaking Way I'll Be Your Lover! Unless..., celebrating announcement of anime adaptation!
            Every major release will feature new anime/manga and minor releases will have different characters!
            Install packages with `sudo pacman -U <file>`, you can use urls or file paths.
       env:

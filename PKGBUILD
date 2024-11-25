@@ -73,12 +73,12 @@ fi
 ### IMPORTANT: Do no edit below this line unless you know what you're doing
 
 pkgbase=linux-xanmod-t2
-_major=6.11
-pkgver=${_major}.3
+_major=6.12
+pkgver=${_major}.1
 _branch=6.x
 xanmod=1
 _revision=
-_sf_branch=main
+_sf_branch=edge
 pkgrel=1
 pkgdesc='Linux Xanmod - Current Stable (CURRENT) for Macs with T2 security chip'
 url="http://www.xanmod.org/"
@@ -113,10 +113,10 @@ for _patch in ${_patches[@]}; do
     source+=("${_patch}::https://raw.githubusercontent.com/archlinux/svntogit-packages/${_commit}/trunk/${_patch}")
 done
 
-sha256sums=('55d2c6c025ebc27810c748d66325dd5bc601e8d32f8581d9e77673529bdacb2e'
+sha256sums=('b1a2562be56e42afb3f8489d4c2a7ac472ac23098f1ef1c1e40da601f54625eb'
             'SKIP'
-            'cc0eeee3f4524b2e81e80663ea0e91adbe5c35ab8e8dc3dde402b5186d8babfd'
-            'fe39b593974f6d3f34851785b3282685b5afe6e1965811c60c50c725e6392f1b'
+            '21f486f5ca92eead76083b1b8ba2e7464a3aec36e097c0039b53d564486aa632'
+            '7ed3138b0a3d74378decf75796a3392db13b51117e9581fcb0c77a8835fbd682'
             'SKIP')
 
 prepare() {
